@@ -1,0 +1,13 @@
+<div id="city_code_wrapper">
+  <% selected ||= selected %>
+  <% cities = CountriesRegionsAndCitiesByPete::get_cities(selected_region,selected_country)%>
+
+	<%
+		#byebug
+	%>
+
+ <% if cities %>
+  	<label><%=label%></label><br />
+    <%= select_tag "#{model}[city]", options_for_select(cities, selected), include_blank: true, id: "city" %>
+  <% end %>
+</div>

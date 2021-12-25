@@ -1,0 +1,38 @@
+<% country_options_array = CountriesRegionsAndCitiesByPete::get_all_countries  %>
+
+<div id="country_code_wrapper">
+	<label><%=label%></label><br />
+	<%= select_tag "#{model}[country]", options_for_select(country_options_array.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "country" %>
+</div>
+
+<script>
+	
+	function region_select_logic(){
+		
+		$('select#region').change(function(event) {
+			selected_country = $('select#country').val();
+			selected_region = $(this).val();
+			locale = $('.locale').data('locale')
+			url = "/get_cities?selected_country=" + selected_country + "&selected_region=" + selected_region + "&model=<%=model%>"
+			$('#city_field').load(url)
+		
+		})
+    }
+
+  $(function() {
+	  
+    $('select#country').change(function(event) {
+		
+      	selected_country = $(this).val();
+		$('select#city').val("");
+      	//locale = $('.locale').data('locale')
+      	url = "/get_regions?selected_country=" + selected_country + "&model=<%=model%>"
+      	$('#region_field').load(url, function() {
+			region_select_logic();
+		});
+    }) 
+	
+	region_select_logic();
+		
+  })
+</script>
