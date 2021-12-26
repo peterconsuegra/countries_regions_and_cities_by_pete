@@ -1,10 +1,13 @@
 <% country_options_array = CountriesRegionsAndCitiesByPete::get_all_countries  
-model_plural = model+"s"
+form_object = model.underscore
+base_route = eval(model).table_name
 %>
+
+<%="model: #{model}"%>
 
 <div id="country_code_wrapper">
 	<label><%=label%></label><br />
-	<%= select_tag "#{model}[country]", options_for_select(country_options_array.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "country" %>
+	<%= select_tag "#{form_object}[country]", options_for_select(country_options_array.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "country" %>
 </div>
 
 <script>
@@ -15,7 +18,7 @@ model_plural = model+"s"
 			selected_country = $('select#country').val();
 			selected_region = $(this).val();
 			locale = $('.locale').data('locale')
-			url = "/<%=model_plural%>_get_cities?selected_country=" + selected_country + "&selected_region=" + selected_region + "&model=<%=model%>"
+			url = "/<%=base_route%>_get_cities?selected_country=" + selected_country + "&selected_region=" + selected_region + "&model=<%=model%>"
 			$('#city_field').load(url)
 		
 		})
@@ -28,7 +31,7 @@ model_plural = model+"s"
       	selected_country = $(this).val();
 		$('select#city').val("");
       	//locale = $('.locale').data('locale')
-      	url = "/<%=model_plural%>_get_regions?selected_country=" + selected_country + "&model=<%=model%>"
+      	url = "/<%=base_route%>_get_regions?selected_country=" + selected_country + "&model=<%=model%>"
       	$('#region_field').load(url, function() {
 			region_select_logic();
 		});

@@ -1,4 +1,6 @@
-<% regions = CountriesRegionsAndCitiesByPete::get_regions(selected_country) %>
+<% regions = CountriesRegionsAndCitiesByPete::get_regions(selected_country) 
+form_object = model.underscore
+%>
 <% selected ||= selected %>
 
 <div id="region_code_wrapper">
@@ -7,6 +9,6 @@
 	<%
 	#	byebug
 	%>
-    <%= select_tag "#{model}[region]", options_for_select(regions.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "region" %>
+    <%= select_tag "#{form_object}[region]", options_for_select(regions.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "region" %>
   <% end %>
 </div>

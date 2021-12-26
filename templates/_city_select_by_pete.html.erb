@@ -1,5 +1,8 @@
 <div id="city_code_wrapper">
-  <% selected ||= selected %>
+   
+  <% 
+  form_object = model.underscore
+  selected ||= selected %>
   <% cities = CountriesRegionsAndCitiesByPete::get_cities(selected_region,selected_country)%>
 
 	<%
@@ -8,6 +11,6 @@
 
  <% if cities %>
   	<label><%=label%></label><br />
-    <%= select_tag "#{model}[city]", options_for_select(cities, selected), include_blank: true, id: "city" %>
+    <%= select_tag "#{form_object}[city]", options_for_select(cities, selected), include_blank: true, id: "city" %>
   <% end %>
 </div>
