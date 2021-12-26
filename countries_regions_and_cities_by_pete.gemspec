@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("carmen", "~> 1.1.3")
   spec.add_dependency("city-state","~> 0.1.0") 
   spec.add_dependency("colorize","~> 0.8.0") 
-  spec.add_dependency("tty-file") 
+  spec.add_dependency("tty-file","~> 0.10.0") 
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
