@@ -38,8 +38,8 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   
   #Adding route to routes.rb
   file="#{rails_app_folder}/config/routes.rb"
-  route1 = "get '/#{model_plural_downcase}/get_regions', to: '#{model_plural_downcase}#get_regions'"
-  route2 = "get '/#{model_plural_downcase}/get_cities', to: '#{model_plural_downcase}#get_cities'"
+  route1 = "get '/#{model_plural_downcase}_get_regions', to: '#{model_plural_downcase}#get_regions'"
+  route2 = "get '/#{model_plural_downcase}_get_cities', to: '#{model_plural_downcase}#get_cities'"
   PeterConsuegraRecipes::append_before_last_appearance_of("end",route1,file)
   PeterConsuegraRecipes::append_before_last_appearance_of("end",route2,file)
   puts "Adding route: #{route1}".blue
@@ -61,18 +61,20 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   puts "-----------------------------------------".red
   puts "Add jQuery to your layout file:".red
   puts "<script src='/countries_regions_and_cities_by_pete/jquery-3.6.0.min.js'></script>".red
-  puts "Add these partials to your _form.html.erb file".red
+  puts "Add these partials to your _form.html.erb file:".red
   
   puts '<div class="field" id="country_field">
-  <%= render partial: "shared/_country_select_by_pete", locals: {model: form.object.class.name.downcase, label: "Country", selected: form.object.country} %>
+  <%= render partial: "shared/country_select_by_pete", locals: {model: form.object.class.name.downcase, label: "Country", selected: form.object.country} %>
   </div>'.red
 
   puts '<div class="field" id="region_field">
-  <%= render partial: "shared/_region_select_by_pete", locals: {model: form.object.class.name.downcase, label: "Region / State", selected_country: form.object.country, selected: form.object.region} %>
+  <%= render partial: "shared/region_select_by_pete", locals: {model: form.object.class.name.downcase, label: "Region / State", selected_country: form.object.country, selected: form.object.region} %>
   </div>'.red
 
- puts ' <div class="field" id="city_field">
-  <%= render partial: "shared/_city_select_by_pete", locals: {model: form.object.class.name.downcase, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
+  puts ' <div class="field" id="city_field">
+  <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name.downcase, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
   </div>'.red
+  puts "Allow globalization params in your controller #{model_plural_downcase}_controller:".red
+  puts "params.require(:#{model_name}).permit(:city, :region, :country)".red
   
 end

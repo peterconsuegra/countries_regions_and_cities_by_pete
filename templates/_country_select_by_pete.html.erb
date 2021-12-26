@@ -1,4 +1,6 @@
-<% country_options_array = CountriesRegionsAndCitiesByPete::get_all_countries  %>
+<% country_options_array = CountriesRegionsAndCitiesByPete::get_all_countries  
+model_plural = model+"s"
+%>
 
 <div id="country_code_wrapper">
 	<label><%=label%></label><br />
@@ -13,7 +15,7 @@
 			selected_country = $('select#country').val();
 			selected_region = $(this).val();
 			locale = $('.locale').data('locale')
-			url = "/get_cities?selected_country=" + selected_country + "&selected_region=" + selected_region + "&model=<%=model%>"
+			url = "/<%=model_plural%>_get_cities?selected_country=" + selected_country + "&selected_region=" + selected_region + "&model=<%=model%>"
 			$('#city_field').load(url)
 		
 		})
@@ -26,7 +28,7 @@
       	selected_country = $(this).val();
 		$('select#city').val("");
       	//locale = $('.locale').data('locale')
-      	url = "/get_regions?selected_country=" + selected_country + "&model=<%=model%>"
+      	url = "/<%=model_plural%>_get_regions?selected_country=" + selected_country + "&model=<%=model%>"
       	$('#region_field').load(url, function() {
 			region_select_logic();
 		});
