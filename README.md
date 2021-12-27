@@ -1,4 +1,4 @@
-# Countries Regions And Cities By Peter Consuegra
+# Countries, Regions and Cities by Pete
 
 An agile way to implement Countries, Regions and Cities in your project, without the need to create additional tables
 
@@ -7,49 +7,47 @@ An agile way to implement Countries, Regions and Cities in your project, without
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'countries_regions_and_cities_by_peterconsuegra', '>= 0.2.5'
+gem 'countries_regions_and_cities_by_pete'
 ```
 
 And then execute:
 
     $ bundle install
 
-Add the jquery.min.js file to the layout you are using: /app/views/layouts/application.html.erb
-
-```javascript
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-```
-
 Run the rake command to generate the necessary files:
 
-    $ bundle exec rake 'install_countries_regions_and_cities_to_model[your_model_name]'
+```shell
+bundle exec rake 'install_countries_regions_and_cities_by_pete[ModelName]'
+```
+
+Add the jquery.min.js file to the layout you are using: /app/views/layouts/application.html.erb
+
+```html
+<script src='/countries_regions_and_cities_by_pete/jquery-3.6.0.min.js'></script>
+```
+
+Add these code to the _form.html.erb 
+```html
+
+<div class="field" id="country_field">
+  <%= render partial: "shared/country_select_by_pete", locals: {model: form.object.class.name, label: "Country", selected: form.object.country} %>
+  </div>
+<div class="field" id="region_field">
+  <%= render partial: "shared/region_select_by_pete", locals: {model: form.object.class.name, label: "Region / State", selected_country: form.object.country, selected: form.object.region} %>
+  </div>
+ <div class="field" id="city_field">
+  <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
+  </div>
+
+```
 
 Allow the following trusted parameters: country, region, city in your model controller. Example:
 
 ```ruby
 # Example: Only allow a list of trusted parameters through.
-    def hotel_params
-      params.require(:hotel).permit(:name, :description, :address, :country, :region, :city)
-    end
-```
-
-Add this code to the _form.html.erb partial of your_model_name form
-
-```
-
-<div class="field" id="country_field">
-<%= render partial: 'shared/peterconsuegra_country_select', locals: {model: form.object.class.name.downcase, label: "Country", selected: form.object.country} %>
-</div>
-
-<div class="field" id="region_field">
-<%= render partial: 'shared/peterconsuegra_region_select', locals: {model: form.object.class.name.downcase, label: "Region / State", selected_country: form.object.country, selected: form.object.region} %>
-</div>
-
-<div class="field" id="city_field">
-<%= render partial: 'shared/peterconsuegra_city_select', locals: {model: form.object.class.name.downcase, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
-</div>
-
-
+def hotel_params
+   params.require(:hotel).permit(:name, :description, :address, :country, :region, :city)
+end
 ```
 
 Video Tutorial
@@ -58,9 +56,6 @@ Video Tutorial
 Watch this video to see how it works
 
 [![IMAGE ALT TEXT HERE](https://ozonegroup.co/countries_regions_and_cities.png)](https://www.youtube.com/watch?v=VrIVdsOnJsY)
-
-
-
 
 ## Contributing
 
