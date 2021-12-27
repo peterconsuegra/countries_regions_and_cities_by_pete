@@ -29,14 +29,15 @@ module PeterConsuegraRecipes
     end
   end
   
-  def self.get_model_vars(model)
+  def self.get_scaffold_vars(model)
     hash = Hash.new
-    hash["model"] = args[:model]
-    hash["model_class"] = args[:model].titleize.gsub!(' ','')
-    hash["table_name"] = eval(model_class).table_name
-    hash["controller_file"] = table_name+"_controller.rb"
-    hash["controller_class"] = controller_file.titleize.gsub!(' ','')
+    hash["model"] = model
+    hash["model_class"] = model.titleize.gsub(' ','')
+    hash["table_name"] = eval(hash["model_class"]).table_name
+    hash["controller_file"] = hash["table_name"]+"_controller.rb"
+    hash["controller_class"] = hash["table_name"].titleize.gsub(' ','')+"Controller"
     hash["base_route"] = hash["table_name"]
+    puts hash
     return hash
   end
   

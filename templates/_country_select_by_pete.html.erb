@@ -3,8 +3,6 @@ form_object = model.underscore
 base_route = eval(model).table_name
 %>
 
-<%="model: #{model}"%>
-
 <div id="country_code_wrapper">
 	<label><%=label%></label><br />
 	<%= select_tag "#{form_object}[country]", options_for_select(country_options_array.sort_by{|c| c.name}.map{|c| [c.name, c.code]}, selected), include_blank: true, id: "country" %>

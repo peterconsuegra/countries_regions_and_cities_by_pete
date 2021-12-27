@@ -9,17 +9,12 @@ Dir.glob("#{Rails.root}/app/models/*.rb").each { |file| require file }
 desc 'install countries_regions_and_cities required files'
 task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
 
+  #Base routes
   rails_app_folder = Dir.pwd 
   gem_folder = File.expand_path('../../../.', __FILE__)
   
-  
-  
-  model = args[:model]
-  model_class = args[:model].titleize.gsub!(' ','')
-  table_name = eval(model_class).table_name
-  controller_file = table_name+"_controller.rb"
-  controller_class = controller_file.titleize.gsub!(' ','')
-  base_route = table_name
+  #Get scaffold vars
+  hash = PeterConsuegraRecipes::get_scaffold_vars(args[:model])
   
   #Adding partials
   dest_folder="#{rails_app_folder}/app/views/shared/"
@@ -44,21 +39,21 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   
   #Adding route to routes.rb
   file="#{rails_app_folder}/config/routes.rb"
-  route1 = "get '/#{base_route}_get_regions', to: '#{base_route}#get_regions'"
-  route2 = "get '/#{base_route}_get_cities', to: '#{base_route}#get_cities'"
+  route1 = "get '/#{hash['base_route']}_get_regions', to: '#{hash['base_route']}#get_regions'"
+  route2 = "get '/#{hash['base_route']}_get_cities', to: '#{hash['base_route']}#get_cities'"
   PeterConsuegraRecipes::append_before_last_appearance_of("end",route1,file)
   PeterConsuegraRecipes::append_before_last_appearance_of("end",route2,file)
   puts "Adding route: #{route1}".blue
   puts "Adding route: #{route2}".blue
   
   #Adding include GlobalizationByPete in Controller
-  file="#{rails_app_folder}/app/controllers/#{controller_file}"
-  puts "class #{controller_class}Controller < ApplicationController"
+  file="#{rails_app_folder}/app/controllers/#{hash['controller_file']}"
+  puts "class #{hash['controller_class']} < ApplicationController"
   code="include GlobalizationByPete\n"
-  TTY::File.inject_into_file file, code, after: "class #{controller_class}Controller < ApplicationController\n"
+  TTY::File.inject_into_file file, code, after: "class #{hash['controller_class']} < ApplicationController\n"
   puts "Adding concern to controller #{file}: include GlobalizationByPete".blue
   
-  `rails generate migration AddFieldsTo#{model_class} country:string region:string city:string`
+  `rails generate migration AddFieldsTo#{hash['model_class']} country:string region:string city:string`
   sleep 2
   `rake db:migrate`
   
@@ -81,7 +76,7 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   puts ' <div class="field" id="city_field">
   <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
   </div>'.red
-  puts "Allow globalization params in your controller #{controller_file}:".red
-  puts "params.require(:#{model}).permit(:city, :region, :country)".red
+  puts "Allow globalization params in your controller #{hash['controller_file']}:".red
+  puts "params.require(:#{hash['model']}).permit(:city, :region, :country)".red
   
 end
