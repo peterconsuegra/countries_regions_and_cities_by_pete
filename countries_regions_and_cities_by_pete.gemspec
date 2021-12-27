@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/peterconsuegra/countries_regions_and_cities_by_pete"
   spec.metadata["changelog_uri"] = "https://github.com/peterconsuegra/countries_regions_and_cities_by_pete/blob/master/CHANGELOG.md"
-
+  spec.license = 'MIT'
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
