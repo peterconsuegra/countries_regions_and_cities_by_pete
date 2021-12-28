@@ -1,6 +1,6 @@
 # Countries, Regions and Cities by Pete
 
-An agile way to implement Countries, Regions and Cities in your project, without the need to create additional tables
+An agile way to implement Countries, Regions, and Cities in a scaffold of your Ruby On Rails project, without the need to create additional tables 
 
 ## Installation
 
