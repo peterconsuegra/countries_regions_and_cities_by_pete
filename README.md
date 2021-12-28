@@ -55,7 +55,7 @@ Video Tutorial
 
 Watch this video to see how it works
 
-[![IMAGE ALT TEXT HERE](https://ozonegroup.co/countries_regions_and_cities.png)](https://www.youtube.com/watch?v=VrIVdsOnJsY)
+[![IMAGE ALT TEXT HERE](https://ozonegroup.co/countries_regions_and_cities.png)](https://www.youtube.com/watch?v=mSwfFtYE8HE)
 
 ## Contributing
 
