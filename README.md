@@ -2,6 +2,10 @@
 
 An agile way to implement Countries, Regions, and Cities in a scaffold of your Ruby On Rails project, without the need to create additional tables 
 
+## Support
+
+Ruby On Rails: 5, 6, 7
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -14,19 +18,24 @@ And then execute:
 
     $ bundle install
 
-Run the rake command to generate the necessary files:
 
-```shell
-bundle exec rake 'install_countries_regions_and_cities_by_pete[ModelName]'
+## Usage
+Let's create a example for a Place scaffold:
+
+1. Go to your application's directory in Terminal and run the command:
+
+
+```ruby
+bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
 ```
 
-Add the jquery.min.js file to the layout you are using: /app/views/layouts/application.html.erb
+2. Add jQuery to your layout file: /app/views/layouts/application.html.erb
 
 ```html
 <script src='/countries_regions_and_cities_by_pete/jquery-3.6.0.min.js'></script>
 ```
 
-Add these code to the _form.html.erb 
+3. Paste this code to your _form.html.erb file: /app/views/places/_form.html.erb
 ```html
 
 <div class="field" id="country_field">
@@ -40,13 +49,11 @@ Add these code to the _form.html.erb
   </div>
 
 ```
-
-Allow the following trusted parameters: country, region, city in your model controller. Example:
+4. Allow parameters (country,region and city) in your controller: /app/controllers/places_controller.rb
 
 ```ruby
-# Example: Only allow a list of trusted parameters through.
-def hotel_params
-   params.require(:hotel).permit(:name, :description, :address, :country, :region, :city)
+def place_params
+   params.require(:place).permit(:name, :description, :address, :country, :region, :city)
 end
 ```
 
