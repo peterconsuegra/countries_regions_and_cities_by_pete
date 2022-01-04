@@ -52,8 +52,7 @@ gem 'countries_regions_and_cities_by_pete'
 bundle install
 ```
 
-6. Go to the application directory in Terminal and run the following command to install the necessary files from the gem:
-
+6. Go to the application directory in Terminal and run the following command to install the necessary code and files from the gem:
 
 ```ruby
 bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
@@ -66,8 +65,8 @@ bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
 ```
 
 8. Paste this code to your _form.html.erb file: /app/views/places/_form.html.erb
-```ruby
 
+```ruby
 <div class="field" id="country_field">
   <%= render partial: "shared/country_select_by_pete", locals: {model: form.object.class.name, label: "Country", selected: form.object.country} %>
   </div>
@@ -77,7 +76,6 @@ bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
  <div class="field" id="city_field">
   <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
   </div>
-
 ```
 9. Allow parameters (country,region and city) in your controller: /app/controllers/places_controller.rb
 
