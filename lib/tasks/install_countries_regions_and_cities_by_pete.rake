@@ -12,47 +12,28 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   #Base routes
   rails_app_folder = Dir.pwd 
   gem_folder = File.expand_path('../../../.', __FILE__)
+  src_folder="#{gem_folder}/templates/"
   
   #Get scaffold vars
   hash = PeterConsuegraRecipes::get_scaffold_vars(args[:model])
   
-  #Adding partials
-  dest_folder="#{rails_app_folder}/app/views/shared/"
-  src_folder="#{gem_folder}/templates/"
-  files=["_city_select_by_pete.html.erb","_country_select_by_pete.html.erb","_region_select_by_pete.html.erb"]
-  FileUtils.mkdir_p dest_folder
-  PeterConsuegraRecipes::move_templates(src_folder,dest_folder,files)
+  #Adding partials  
+  PeterConsuegraRecipes::move_templates(src_folder,"#{rails_app_folder}/app/views/shared/",["_city_select_by_pete.html.erb","_country_select_by_pete.html.erb","_region_select_by_pete.html.erb"])
   
   #Adding concern
-  dest_folder="#{rails_app_folder}/app/controllers/concerns/"
-  file="globalization_by_pete.rb"
-  FileUtils.mkdir_p dest_folder
-  FileUtils.cp src_folder+file,dest_folder+file
-  puts "File copied to: #{dest_folder+file}".green
+  PeterConsuegraRecipes::move_template(src_folder,"#{rails_app_folder}/app/controllers/concerns/","globalization_by_pete.rb")
+    
+  #Adding jQuery
+  PeterConsuegraRecipes::move_template(src_folder,"#{rails_app_folder}/public/countries_regions_and_cities_by_pete/","jquery-3.6.0.min.js")
+    
+  #Adding route to routes.rb 
+  PeterConsuegraRecipes::add_route(hash['base_route'],"get_regions","get")
+  PeterConsuegraRecipes::add_route(hash['base_route'],"get_cities","get")
+    
+  #Adding concern to controller
+  PeterConsuegraRecipes::add_concern_to_controller("include GlobalizationByPete\n",hash['controller_file'],hash['controller_class'])
   
-  #Copy jquery-3.6.0.min.js file
-  dest_folder="#{rails_app_folder}/public/countries_regions_and_cities_by_pete/"
-  file="jquery-3.6.0.min.js"
-  FileUtils.mkdir_p dest_folder
-  FileUtils.cp src_folder+file,dest_folder+file
-  puts "File copied to: #{dest_folder+file}".green
-  
-  #Adding route to routes.rb
-  file="#{rails_app_folder}/config/routes.rb"
-  route1 = "get '/#{hash['base_route']}_get_regions', to: '#{hash['base_route']}#get_regions'"
-  route2 = "get '/#{hash['base_route']}_get_cities', to: '#{hash['base_route']}#get_cities'"
-  PeterConsuegraRecipes::append_before_last_appearance_of("end",route1,file)
-  PeterConsuegraRecipes::append_before_last_appearance_of("end",route2,file)
-  puts "Adding route: #{route1}".blue
-  puts "Adding route: #{route2}".blue
-  
-  #Adding include GlobalizationByPete in Controller
-  file="#{rails_app_folder}/app/controllers/#{hash['controller_file']}"
-  puts "class #{hash['controller_class']} < ApplicationController"
-  code="include GlobalizationByPete\n"
-  TTY::File.inject_into_file file, code, after: "class #{hash['controller_class']} < ApplicationController\n"
-  puts "Adding concern to controller #{file}: include GlobalizationByPete".blue
-  
+  #Adding migration
   `rails generate migration AddFieldsTo#{hash['model_class']} country:string region:string city:string`
   sleep 2
   `rake db:migrate`
@@ -76,7 +57,7 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   puts ' <div class="field" id="city_field">
   <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
   </div>'.red
-  puts "Allow globalization params in your controller #{hash['controller_file']}:".red
+  puts "Allow countries_regions_and_cities_by_pete globalization params in your controller #{hash['controller_file']}:".red
   puts "params.require(:#{hash['model']}).permit(:city, :region, :country)".red
   
 end
