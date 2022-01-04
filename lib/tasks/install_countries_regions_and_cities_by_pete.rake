@@ -1,14 +1,12 @@
 require_relative '../peterconsuegra_recipes'
-require 'fileutils'
-require "tty-file"
 
-#bundle exec rake 'install_countries_regions_and_cities_by_pete[place]'
-
-Dir.glob("#{Rails.root}/app/models/*.rb").each { |file| require file }
+#bundle exec rake 'install_countries_regions_and_cities_by_pete[model]'
 
 desc 'install countries_regions_and_cities required files'
 task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
-
+  
+  Dir.glob("#{Rails.root}/app/models/*.rb").each { |file| require file }
+  
   #Base routes
   rails_app_folder = Dir.pwd 
   gem_folder = File.expand_path('../../../.', __FILE__)
@@ -58,6 +56,6 @@ task :install_countries_regions_and_cities_by_pete, [:model] do |t, args|
   <%= render partial: "shared/city_select_by_pete", locals: {model: form.object.class.name, label: "City", selected_region: form.object.region, selected_country: form.object.country, selected: form.object.city} %>
   </div>'.red
   puts "Allow countries_regions_and_cities_by_pete globalization params in your controller #{hash['controller_file']}:".red
-  puts "params.require(:#{hash['model']}).permit(:city, :region, :country)".red
+  puts "params.require(:#{hash['model'].downcase}).permit(:city, :region, :country)".red
   
 end
