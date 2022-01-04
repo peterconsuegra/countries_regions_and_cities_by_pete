@@ -40,20 +40,32 @@ bundle exec rake db:create
 bundle exec rails g scaffold Place name:string description:text
 ```
 
-4. Go to the application directory in Terminal and run the following command to install the necessary files from the gem:
+4. Add this line to your application's Gemfile:
+
+```ruby
+gem 'countries_regions_and_cities_by_pete'
+```
+
+5. Go to your application's directory in Terminal and run:
+
+```ruby
+bundle install
+```
+
+6. Go to the application directory in Terminal and run the following command to install the necessary files from the gem:
 
 
 ```ruby
 bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
 ```
 
-5. Add jQuery to your layout file: /app/views/layouts/application.html.erb
+7. Add jQuery to your layout file: /app/views/layouts/application.html.erb
 
 ```html
 <script src='/countries_regions_and_cities_by_pete/jquery-3.6.0.min.js'></script>
 ```
 
-6. Paste this code to your _form.html.erb file: /app/views/places/_form.html.erb
+8. Paste this code to your _form.html.erb file: /app/views/places/_form.html.erb
 ```ruby
 
 <div class="field" id="country_field">
@@ -67,7 +79,7 @@ bundle exec rake 'install_countries_regions_and_cities_by_pete[Place]'
   </div>
 
 ```
-7. Allow parameters (country,region and city) in your controller: /app/controllers/places_controller.rb
+9. Allow parameters (country,region and city) in your controller: /app/controllers/places_controller.rb
 
 ```ruby
 def place_params
